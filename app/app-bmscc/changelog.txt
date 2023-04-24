@@ -1,0 +1,20 @@
+Version 1.0.0-beta
+- Changes
+    -Nothing to mention (Initial release)
+- Known issues
+    -Nothing to mention here
+
+Version 1.0.0
+- Changes
+    -Support simultaneous joining of 30 sensors.
+    -Increment the absolute time every 1s for better resolution and set the deviation limit to 2s.
+    -Fix validity check of the sensor list stored in the flash.
+    -Store sensor list only if the registered sensors is at least 1.
+- Known issues
+    -Nothing to mention here
+
+Version 1.0.1
+- Changes
+    -Fix measurement value out of received frame parsing bug
+- Known issues
+    -Nothing to mention here
