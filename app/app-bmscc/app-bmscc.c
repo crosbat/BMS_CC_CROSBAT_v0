@@ -92,6 +92,8 @@ int sc_address_list[30]={0};
 
 int choose_sc = 0;
 
+int connected_slaves = 0; //This gives the total number of connected slaves.
+
 /*=============================================================================
                                 PROCESSES
 =============================================================================*/
@@ -245,7 +247,17 @@ PROCESS_THREAD(button_process, ev, data)
           sf_joinManger_openManualWindow();
           GPIO_writeDio(IOID_12,0);
           advertiseData++;
-          choose_sc++; //just updating the next slave to bypass
+          //choose_sc++; //just updating the next slave to bypass
+          connected_slaves = (int)sf_deviceMgmt_getRegisteredDeviceCount;
+
+
+          //Get the serial numbers of all the slaves that are connected to BMS.
+          for(int i=0;i<SF_CONF_SENSOR_CNT_MAX;i++)
+          {
+              sc_address_list[i]=(sf_deviceMgmt_getSensorList()+i)->serialNr;
+          }
+
+
         }
       }
     }

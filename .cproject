@@ -73,6 +73,25 @@
 							<tool id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.hex.2073937438" name="GNU Objcopy Utility" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.hex"/>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1084350736.471550088.1916896653.1315308383.192198407" name="app-bmscc.c" rcbsApplicability="disable" resourcePath="app/app-bmscc/app-bmscc.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.exe.compilerDebug.1459247815.265646818">
+						<tool id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.exe.compilerDebug.1459247815.265646818" name="GNU Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.exe.compilerDebug.1459247815">
+							<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compilerID.DEBUG.1068084592" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compilerID.DEBUG" value="true" valueType="boolean"/>
+							<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compilerID.OPT_LEVEL.296299687" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compilerID.OPT_LEVEL.0" valueType="enumerated"/>
+							<inputType id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__C_SRCS.1548022302" name="C Sources" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__C_SRCS"/>
+							<inputType id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__CPP_SRCS.53986243" name="C++ Sources" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__CPP_SRCS"/>
+							<inputType id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__ASM_SRCS.297339098" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__ASM_SRCS"/>
+							<inputType id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__ASM2_SRCS.448418637" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__ASM2_SRCS"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1084350736.471550088.1916896653.1315308383.807306687" name="sf_joinManager.c" rcbsApplicability="disable" resourcePath="modules/sf-join/sf_joinManager.c" toolsToInvoke="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.exe.compilerDebug.1459247815.1743450271">
+						<tool id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.exe.compilerDebug.1459247815.1743450271" name="GNU Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.exe.compilerDebug.1459247815">
+							<option id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compilerID.OPT_LEVEL.369277880" name="Optimization Level" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compilerID.OPT_LEVEL" value="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compilerID.OPT_LEVEL._none" valueType="enumerated"/>
+							<inputType id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__C_SRCS.1643445303" name="C Sources" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__C_SRCS"/>
+							<inputType id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__CPP_SRCS.812347412" name="C++ Sources" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__CPP_SRCS"/>
+							<inputType id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__ASM_SRCS.1662957964" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__ASM_SRCS"/>
+							<inputType id="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__ASM2_SRCS.670887312" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.TMS470_GNU_9.0.compiler.inputType__ASM2_SRCS"/>
+						</tool>
+					</fileInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
@@ -164,6 +183,6 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="bms-cc.com.ti.ccstudio.buildDefinitions.TMS470.ProjectType.1623464480" name="TMS470" projectType="com.ti.ccstudio.buildDefinitions.TMS470.ProjectType"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="scannerConfiguration"/>
 </cproject>
