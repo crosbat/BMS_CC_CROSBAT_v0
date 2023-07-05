@@ -94,6 +94,8 @@ int choose_sc = 0;
 
 int connected_slaves = 0; //This gives the total number of connected slaves.
 
+float slave_data;
+
 /*=============================================================================
                                 PROCESSES
 =============================================================================*/
@@ -246,7 +248,12 @@ PROCESS_THREAD(button_process, ev, data)
           /* Open manual join window */
           sf_joinManger_openManualWindow();
           GPIO_writeDio(IOID_12,0);
-          advertiseData++;
+          //advertiseData++; // old code just incrementing. if this number >20, the slave would bypass.
+
+          //we will now change this advertiseData based on the value sent by slave itself.
+          //so, if the voltage of battery goes less than 3.0V, we will bypass it.
+
+
           //choose_sc++; //just updating the next slave to bypass
           connected_slaves = (int)sf_deviceMgmt_getRegisteredDeviceCount;
 
@@ -489,6 +496,25 @@ __attribute__((weak)) void sf_app_output_callback(void *ptr, nullnet_tx_status_t
 
 /*------------------------------------------------------------------------------
   sf_app_handleMeasurement()
+
+  //AK Update 05.07.2023
+
+  the variable meas holds the data sent by the slave.
+  right now this is only the battery voltage.
+
+  if the meas meets some threshold, we make the variable advertiseData to go high enough
+  this will be sent back to the slave using af_app_txdata function.
+
+  As of today, only one slave it is sent to only one slave.
+
+  Based on what we send to the slave, the slave either toggle PWM or stay in previous state.
+
+  Now we do not need button press intervention.
+
+  TBD: change advertiseData to boolean.
+
+
+
 ------------------------------------------------------------------------------*/
 __attribute__((weak)) void sf_app_handleMeasurement(uint8_t* pInBuf, uint8_t length, linkaddr_t* pSrc)
 {
@@ -512,6 +538,30 @@ __attribute__((weak)) void sf_app_handleMeasurement(uint8_t* pInBuf, uint8_t len
      ------------|-------------------
         uint8_t  | meas_t              */
   memcpy(&meas, pInBuf + SF_FRAME_TYPE_LEN, sizeof(meas_t));
+
+  slave_data = meas.value;
+
+  // to initiate bypass if the voltage goes low
+  if(slave_data < 1100000) //corresponds to 1.1V from adc output, here we need to bypass
+      advertiseData = 25;
+  else
+      advertiseData = 12;
+
+
+  //send data after processing the measurement?
+  uint8_t pData[] = {advertiseData}; //orig 1
+  sf_sensor_t *pSensor = sf_deviceMgmt_getDeviceByIndex(choose_sc);
+  if(NULL != pSensor)
+  {
+    if(0 != pSensor->serialNr &&
+        !linkaddr_cmp(&pSensor->shortAddress, &linkaddr_null))
+    {
+      sf_app_txData(pData, sizeof(pData), &pSensor->shortAddress);
+    }
+  }
+
+
+  // else we do not do anything, so the slave will be inserted.
 
   LOG_INFO("Measurement timestamp: %uh : %umin : %usec \n",
             (unsigned int)sf_absoluteTime_getHours(meas.timeStamp),
