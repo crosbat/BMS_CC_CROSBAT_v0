@@ -95,6 +95,7 @@ int choose_sc = 0;
 int connected_slaves = 0; //This gives the total number of connected slaves.
 
 float slave_data;
+uint16_t slave_addr_test;
 
 /*=============================================================================
                                 PROCESSES
@@ -540,16 +541,47 @@ __attribute__((weak)) void sf_app_handleMeasurement(uint8_t* pInBuf, uint8_t len
   memcpy(&meas, pInBuf + SF_FRAME_TYPE_LEN, sizeof(meas_t));
 
   slave_data = meas.value;
+  slave_addr_test = pSrc->u16;
+
+  // some logic to send data to slave based on what we receive
+  //-----------------------------------------------------------
+  // when the voltage of a slave < threshold, we set choose_sc to the address of that sc.
+  // for eg. if 1st sc has low voltage, we make advertiseData = 25 and choose_sc = slave_addr_test - 1.
+  // we do slave_addr_test - 1 because there is an offset of 1. choose_sc needs to start from 0 but first sc in slave_addr_test starts from 1.
+
+  // once the voltage goes back up, we reduce the advertiseData. this needs to be resent to stop the toggle.
+  // TBD: check if we need to repeat choose_sc here as well. I think yes.
+
 
   // to initiate bypass if the voltage goes low
   if(slave_data < 1100000) //corresponds to 1.1V from adc output, here we need to bypass
+  {
       advertiseData = 25;
+      choose_sc = slave_addr_test-1;
+  }
   else
       advertiseData = 12;
 
 
   //send data after processing the measurement?
-  uint8_t pData[] = {advertiseData}; //orig 1
+  //uint8_t pData[] = {advertiseData}; //orig 1
+
+  uint8_t pData[3];
+  pData[0] = advertiseData; //this is used now by the slave to toggle PWM
+  pData[1] = 173; // dummy integer, 0xAD for test.
+  pData[2] = (uint8_t)slave_addr_test; //to check what we get here.
+
+  // data format used for the BMS:
+  // pData[3] --> will have 4 bytes. the first byte is not in control and it is default 0x04.
+  // pData[0] --> actual advertiseData used to toggle or hold the slave PWM
+  // pData[1] --> right now a dummy value 173 corresponds to 0xad. we can change it to choose the data from slave.
+  // to design pData[1] we also need to update slave code. TBD
+  // pData[2] --> indicates the slave address. this needs to be unique to each slave.
+
+
+
+
+
   sf_sensor_t *pSensor = sf_deviceMgmt_getDeviceByIndex(choose_sc);
   if(NULL != pSensor)
   {
